@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Trello1.props" />
+</Project>
