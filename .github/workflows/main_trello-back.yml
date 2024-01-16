@@ -14,13 +14,14 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v4.x
+      - name: Checkout code
+        uses: actions/checkout@v2.4.2
 
       - name: Set up .NET Core
-        uses: actions/setup-dotnet@v1.x
+        uses: actions/setup-dotnet@v2.1.5
         with:
-          dotnet-version: '8.x'
-          include-prerelease: true
+          dotnet-version: '6.x'
+          include-prerelease: false
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
@@ -29,7 +30,7 @@ jobs:
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3.x
+        uses: actions/upload-artifact@v2.2.4
         with:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
@@ -39,17 +40,17 @@ jobs:
     needs: build
     environment:
       name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+      url: ${{ needs.build.outputs.webapp-url }}
 
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v3.x
+        uses: actions/download-artifact@v2.2.4
         with:
           name: .net-app
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
-        uses: azure/webapps-deploy@v3.x
+        uses: azure/webapps-deploy@v2
         with:
           app-name: 'Trello-Back'
           slot-name: 'Production'
