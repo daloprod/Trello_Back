@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ib\\Desktop\\Trello1_Calv\\Trello1\\Trello1.csproj": {}
+    "C:\\Users\\Ogoul\\Trello_Back\\Trello1\\Trello1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ib\\Desktop\\Trello1_Calv\\Trello1\\Trello1.csproj": {
+    "C:\\Users\\Ogoul\\Trello_Back\\Trello1\\Trello1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ib\\Desktop\\Trello1_Calv\\Trello1\\Trello1.csproj",
+        "projectUniqueName": "C:\\Users\\Ogoul\\Trello_Back\\Trello1\\Trello1.csproj",
         "projectName": "Trello1",
-        "projectPath": "C:\\Users\\ib\\Desktop\\Trello1_Calv\\Trello1\\Trello1.csproj",
-        "packagesPath": "C:\\Users\\ib\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ib\\Desktop\\Trello1_Calv\\Trello1\\obj\\",
+        "projectPath": "C:\\Users\\Ogoul\\Trello_Back\\Trello1\\Trello1.csproj",
+        "packagesPath": "C:\\Users\\Ogoul\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Ogoul\\Trello_Back\\Trello1\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\ib\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Ogoul\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -51,6 +55,10 @@
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlserver": {
               "target": "Package",
               "version": "[8.0.0, )"
             },
