@@ -4956,11 +4956,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Ogoul\\Trello_Back\\Trello1\\Trello1.csproj",
+      "projectUniqueName": "C:\\Users\\Ogoul\\TRELLO\\Trello_Back\\Trello1\\Trello1.csproj",
       "projectName": "Trello1",
-      "projectPath": "C:\\Users\\Ogoul\\Trello_Back\\Trello1\\Trello1.csproj",
+      "projectPath": "C:\\Users\\Ogoul\\TRELLO\\Trello_Back\\Trello1\\Trello1.csproj",
       "packagesPath": "C:\\Users\\Ogoul\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Ogoul\\Trello_Back\\Trello1\\obj\\",
+      "outputPath": "C:\\Users\\Ogoul\\TRELLO\\Trello_Back\\Trello1\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
