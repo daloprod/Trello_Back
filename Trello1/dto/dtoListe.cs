@@ -1,6 +1,6 @@
 ﻿namespace Trello1.dto
 {
-    public class dtoListe
+    public class DtoListe
     {
    
         

@@ -5,10 +5,13 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>false</InvariantGlobalization>
+    <PackageProjectUrl>http://localhost:5136</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.3.0" />
+    <PackageReference Include="Microsoft.AspNet.Cors" Version="5.3.0" NoWarn="NU1701" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.3.0" NoWarn="NU1701" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.3.0" NoWarn="NU1701" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

@@ -23,11 +23,11 @@ namespace Trello1.Controllers
 
         public CommentaireController(PresidentContext context)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         [HttpPost]
-        public IActionResult Post(dtocome dto)
+        public IActionResult Post(DtoCome dto)
         {
 
             var commentaire = new Commentaire()
@@ -79,7 +79,7 @@ namespace Trello1.Controllers
 
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, dtocome dto)
+        public IActionResult Put(int id, DtoCome dto)
         {
             var commentaire = _context.Commentaires.SingleOrDefault(c => c.Id == id);
 

@@ -1,39 +1,48 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Trello1.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-// Add services to the container.
 
+// Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddDbContext<PresidentContext>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
-
 builder.Services.AddCors(options => options.AddPolicy(name: "christopher",
    policy => {
        policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
    }
-   ));
+));
 
-var app = builder.Build();
+// Service DbContext
+builder.Services.AddDbContext<PresidentContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-app.UseCors("christopher");
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+try
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    var app = builder.Build();
+
+    // Configurez le pipeline de requête HTTP.
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+
+    app.UseHttpsRedirection();
+
+    app.UseCors("christopher");  // Placez ceci avant app.MapControllers()
+
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.Run("http://localhost:5136");
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+catch (Exception ex)
+{
+    Console.WriteLine($"An error occurred while building or running the application: {ex}");
+}

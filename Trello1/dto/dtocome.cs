@@ -1,6 +1,6 @@
 ﻿namespace Trello1.dto
 {
-    public class dtocome
+    public class DtoCome
 
     {
         public string Contenu { get; set; } = null!;

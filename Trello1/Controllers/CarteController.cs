@@ -2,49 +2,43 @@
 using Microsoft.AspNetCore.Mvc;
 using Trello1.Models;
 using Trello1.dto;
-using System.Diagnostics;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.Extensions.Options;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using System;
+using System.Linq;
 using System.Web.Http.Cors;
-
 
 namespace Trello1.Controllers
 {
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     [Route("api/[controller]")]
     [ApiController]
-    public class CarteController : ControllerBase
+    public class CarteController(PresidentContext context) : ControllerBase
     {
-        private readonly PresidentContext _context;
-
-        public CarteController(PresidentContext context)
-        {
-            _context = context;
-        }
+        private readonly PresidentContext _context = context ?? throw new ArgumentNullException(nameof(context));
 
         [HttpPost]
-        public IActionResult Post(dtoPostCarte dto)
+        public IActionResult Post(DtoPostCarte dto)
         {
+            if (dto == null)
+            {
+                return BadRequest("Invalid model object");
+            }
+
             var carte = new Carte()
             {
-                 IdListe = dto.IdListe,
+                IdListe = dto.IdListe,
                 Titre = dto.Titre,
                 Description = dto.Description,
+                DateCreation = DateTime.Now
             };
-            carte.DateCreation = DateTime.Now;
+
             _context.Cartes.Add(carte);
             _context.SaveChanges();
             return Ok(carte);
         }
 
-
         [HttpGet]
         public IActionResult Get()
         {
-
             var Cartes = _context.Cartes.ToList();
             foreach (var carte in Cartes)
             {
@@ -60,25 +54,29 @@ namespace Trello1.Controllers
                     .ToList();
             }
 
-
             return Ok(Cartes);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(dtoPostProjet dto, int id)
-
+        public IActionResult Put(int id, DtoPostProjet dto)
         {
-            var Carte = _context.Cartes.SingleOrDefault(g => g.Id == id);
-
-            if (Carte==null)
+            if (dto == null)
             {
-                return NotFound($"No genre was found with ID: {id}");
+                return BadRequest("Invalid model object");
             }
 
-           Carte.Titre=dto.Titre;
+            var Carte = _context.Cartes.SingleOrDefault(g => g.Id == id);
+
+            if (Carte == null)
+            {
+                return NotFound($"No card was found with ID: {id}");
+            }
+
+            Carte.Titre = dto.Titre;
             Carte.Description = dto.Description;
             Carte.IdListe = dto.IdListe;
             Carte.DateCreation = DateTime.Now;
+
             _context.SaveChanges();
             return Ok(Carte);
         }
@@ -86,42 +84,15 @@ namespace Trello1.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var Carte= _context.Cartes.SingleOrDefault(g => g.Id == id);
+            var Carte = _context.Cartes.SingleOrDefault(g => g.Id == id);
             if (Carte == null)
             {
-                return NotFound($"No genre was found with ID: {id}");
+                return NotFound($"No card was found with ID: {id}");
             }
+
             _context.Remove(Carte);
             _context.SaveChanges();
             return Ok(Carte);
-
         }
-
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

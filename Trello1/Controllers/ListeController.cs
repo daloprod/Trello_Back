@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
+using System;
+using System.Linq;
 using System.Web.Http.Cors;
 using Trello1.dto;
 using Trello1.Models;
@@ -11,18 +12,12 @@ namespace Trello1.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-
-    public class ListeController : ControllerBase
+    public class ListeController(PresidentContext context) : ControllerBase
     {
-        private readonly PresidentContext _context;
-
-        public ListeController(PresidentContext context)
-        {
-            _context = context;
-        }
+        private readonly PresidentContext _context = context ?? throw new ArgumentNullException(nameof(context));
 
         [HttpPost]
-        public IActionResult Post(dtoListe dto)
+        public IActionResult Post(DtoListe dto)
         {
             var Liste = new Liste
             {
@@ -34,8 +29,6 @@ namespace Trello1.Controllers
             _context.SaveChanges();
             return Ok(Liste);
         }
-
-     
 
         [HttpGet]
         public IActionResult Get()
@@ -52,7 +45,6 @@ namespace Trello1.Controllers
                         IdListe = liste.Id,
                         Titre = carte.Titre,
                         Description = carte.Description,
-                        // Ajoutez d'autres propriétés de Carte au besoin
                     })
                     .ToList();
             }
@@ -60,19 +52,14 @@ namespace Trello1.Controllers
             return Ok(listes);
         }
 
-
-
-
-
         [HttpDelete("{id}")]
-       public IActionResult Delete(int id) 
+        public IActionResult Delete(int id)
         {
             var Liste = _context.Listes.SingleOrDefault(p => p.Id == id);
 
             if (Liste == null)
             {
-                return NotFound($"le {id} est introuvable");
-                
+                return NotFound($"List with ID: {id} not found");
             }
 
             _context.Remove(Liste);
@@ -80,28 +67,18 @@ namespace Trello1.Controllers
             return Ok(Liste);
         }
 
-
         [HttpPut("{id}")]
-        public IActionResult Put(int id, dtoListe dto) 
+        public IActionResult Put(int id, DtoListe dto)
         {
             var Liste = _context.Listes.SingleOrDefault(p => p.Id == id);
             if (Liste == null)
             {
-                return NotFound($"le {id} est introuvable");
-
+                return NotFound($"List with ID: {id} not found");
             }
-            Liste.Nom = dto.Nom;    
-           _context.SaveChanges();
+            Liste.Nom = dto.Nom;
+            _context.SaveChanges();
 
             return Ok(Liste);
-
         }
-
-
-
-
-
-
-
-   }
+    }
 }

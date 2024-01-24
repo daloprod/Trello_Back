@@ -44,9 +44,26 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNet.Cors": {
+              "target": "Package",
+              "version": "[5.3.0, )",
+              "noWarn": [
+                "NU1701"
+              ]
+            },
+            "Microsoft.AspNet.WebApi.Core": {
+              "target": "Package",
+              "version": "[5.3.0, )",
+              "noWarn": [
+                "NU1701"
+              ]
+            },
             "Microsoft.AspNet.WebApi.Cors": {
               "target": "Package",
-              "version": "[5.3.0, )"
+              "version": "[5.3.0, )",
+              "noWarn": [
+                "NU1701"
+              ]
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
@@ -96,7 +113,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

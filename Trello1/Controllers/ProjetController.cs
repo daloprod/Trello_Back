@@ -2,12 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Trello1.Models;
 using Trello1.dto;
-using System.Diagnostics;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.Extensions.Options;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using System;
+using System.Linq;
 using System.Web.Http.Cors;
 
 namespace Trello1.Controllers
@@ -15,32 +11,23 @@ namespace Trello1.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class ProjetController : ControllerBase
+    public class ProjetController(PresidentContext context) : ControllerBase
     {
-        private readonly PresidentContext _context;
+        private readonly PresidentContext _context = context ?? throw new ArgumentNullException(nameof(context));
 
-        public ProjetController(PresidentContext context)
-        {
-            _context = context;
-        }
-    
         [HttpPost]
-        public IActionResult Post(dtoPostProjet dto)
+        public IActionResult Post([FromBody] DtoPostProjet dto)
         {
             var projet = new Projet()
             {
                 Nom = dto.Nom,
                 Description = dto.Description,
+                DateCreation = DateTime.Now
             };
-            projet.DateCreation = DateTime.Now;
             _context.Projets.Add(projet);
             _context.SaveChanges();
             return Ok(projet);
         }
-
-
-
-
 
         [HttpGet]
         public IActionResult Get()
@@ -79,20 +66,18 @@ namespace Trello1.Controllers
             return Ok(projets);
         }
 
-
-
         [HttpPut("{id}")]
-        public IActionResult Put(dtoPostProjet dto, int id)
-    
+        public IActionResult Put([FromBody] DtoPostProjet dto, int id)
         {
             var Projet = _context.Projets.SingleOrDefault(g => g.Id == id);
 
-            if(Projet == null)
+            if (Projet == null)
             {
-                return NotFound($"No genre was found with ID: {id}");
+                return NotFound($"No project was found with ID: {id}");
             }
+
             Projet.Nom = dto.Nom;
-           Projet.Description = dto.Description;
+            Projet.Description = dto.Description;
             _context.SaveChanges();
             return Ok(Projet);
         }
@@ -103,13 +88,11 @@ namespace Trello1.Controllers
             var Projet = _context.Projets.SingleOrDefault(g => g.Id == id);
             if (Projet == null)
             {
-                return NotFound($"No genre was found with ID: {id}");
+                return NotFound($"No project was found with ID: {id}");
             }
             _context.Remove(Projet);
             _context.SaveChanges(true);
             return Ok(Projet);
-
         }
-
     }
 }

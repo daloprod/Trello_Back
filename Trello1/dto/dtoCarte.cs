@@ -1,9 +1,9 @@
 ﻿namespace Trello1.dto
 {
-    public class dtoPostCarte
+    public class DtoPostCarte
     {
          
-        public string? Titre { get; set; }
+        public required string Titre { get; set; }
 
         public string? Description { get; set; }
 
@@ -13,7 +13,7 @@
 
     }
 
-    public class dtoGetCarte
+    public class DtoGetCarte
     {
         public string? Titre { get; set; }
 
